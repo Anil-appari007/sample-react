@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  samplereact:
+    image: samplereact
+    build:
+      context: .
+      dockerfile: ./Dockerfile
