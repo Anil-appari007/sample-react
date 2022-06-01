@@ -43,7 +43,7 @@ class App extends React.Component {
   render(){
     return (
       <div className="App">
-        <p>React Deployment using Bamboo</p>
+        <p>React Deployment using Bamboo - Demo1</p>
         <p>Reload to check the time change</p>
         <p>Current Date And Time : {this.state.curDT}</p>
       </div>
