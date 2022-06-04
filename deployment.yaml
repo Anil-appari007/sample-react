@@ -1,0 +1,53 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 1000000
+globalDefault: true
+description: "This priority class should be used for XYZ service pods only."
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      name: pod-web
+      labels:
+        app: web
+    spec:
+      priorityClassName: high-priority
+      containers:
+        - name: web-container
+          image: anilappari/samplereact:latest
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: 50m
+              memory: "200Mi"
+            requests:
+              cpu: 40m
+              memory: "100Mi"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: web
+  ports:
+    - port: 8080
+      targetPort: 80
